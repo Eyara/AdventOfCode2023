@@ -94,7 +94,6 @@ for offset in start_offset:
 polygon = Polygon(borders[0])
 
 result = 0
-check_points = []
 
 for i in range(n):
     for j in range(m):
