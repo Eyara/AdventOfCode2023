@@ -8,7 +8,7 @@ def calc_new_idx(old, new):
     return old[0] + new[0], old[1] + new[1]
 
 
-def get_longest_sequence(current_idx, step, direction, indexes=None):
+def get_borders(current_idx, step, direction, indexes=None):
     if indexes is None:
         indexes = []
 
@@ -17,34 +17,34 @@ def get_longest_sequence(current_idx, step, direction, indexes=None):
     cur_point = lines[current_idx[0]][current_idx[1]]
     if cur_point == '|':
         if direction == 'up':
-            return get_longest_sequence(calc_new_idx(current_idx, (-1, 0)), step + 1, direction, indexes)
+            return get_borders(calc_new_idx(current_idx, (-1, 0)), step + 1, direction, indexes)
         elif direction == 'down':
-            return get_longest_sequence(calc_new_idx(current_idx, (1, 0)), step + 1, direction, indexes)
+            return get_borders(calc_new_idx(current_idx, (1, 0)), step + 1, direction, indexes)
     elif cur_point == '-':
         if direction == 'left':
-            return get_longest_sequence(calc_new_idx(current_idx, (0, -1)), step + 1, direction, indexes)
+            return get_borders(calc_new_idx(current_idx, (0, -1)), step + 1, direction, indexes)
         elif direction == 'right':
-            return get_longest_sequence(calc_new_idx(current_idx, (0, 1)), step + 1, direction, indexes)
+            return get_borders(calc_new_idx(current_idx, (0, 1)), step + 1, direction, indexes)
     elif cur_point == 'L':
         if direction == 'left':
-            return get_longest_sequence(calc_new_idx(current_idx, (-1, 0)), step + 1, 'up', indexes)
+            return get_borders(calc_new_idx(current_idx, (-1, 0)), step + 1, 'up', indexes)
         elif direction == 'down':
-            return get_longest_sequence(calc_new_idx(current_idx, (0, 1)), step + 1, 'right', indexes)
+            return get_borders(calc_new_idx(current_idx, (0, 1)), step + 1, 'right', indexes)
     elif cur_point == 'J':
         if direction == 'right':
-            return get_longest_sequence(calc_new_idx(current_idx, (-1, 0)), step + 1, 'up', indexes)
+            return get_borders(calc_new_idx(current_idx, (-1, 0)), step + 1, 'up', indexes)
         elif direction == 'down':
-            return get_longest_sequence(calc_new_idx(current_idx, (0, -1)), step + 1, 'left', indexes)
+            return get_borders(calc_new_idx(current_idx, (0, -1)), step + 1, 'left', indexes)
     elif cur_point == '7':
         if direction == 'right':
-            return get_longest_sequence(calc_new_idx(current_idx, (1, 0)), step + 1, 'down', indexes)
+            return get_borders(calc_new_idx(current_idx, (1, 0)), step + 1, 'down', indexes)
         elif direction == 'up':
-            return get_longest_sequence(calc_new_idx(current_idx, (0, -1)), step + 1, 'left', indexes)
+            return get_borders(calc_new_idx(current_idx, (0, -1)), step + 1, 'left', indexes)
     elif cur_point == 'F':
         if direction == 'up':
-            return get_longest_sequence(calc_new_idx(current_idx, (0, 1)), step + 1, 'right', indexes)
+            return get_borders(calc_new_idx(current_idx, (0, 1)), step + 1, 'right', indexes)
         elif direction == 'left':
-            return get_longest_sequence(calc_new_idx(current_idx, (1, 0)), step + 1, 'down', indexes)
+            return get_borders(calc_new_idx(current_idx, (1, 0)), step + 1, 'down', indexes)
     elif cur_point == 'S':
         return indexes
 
@@ -80,16 +80,16 @@ for offset in start_offset:
 
     if offset[0] == 'up':
         if lines[new_idx[0]][new_idx[1]] in ('|', '7', 'F'):
-            borders.append(get_longest_sequence(new_idx, 1, offset[0]))
+            borders.append(get_borders(new_idx, 1, offset[0]))
     elif offset[0] == 'left':
         if lines[new_idx[0]][new_idx[1]] in ('-', 'F', 'L'):
-            borders.append(get_longest_sequence(new_idx, 1, offset[0]))
+            borders.append(get_borders(new_idx, 1, offset[0]))
     elif offset[0] == 'down':
         if lines[new_idx[0]][new_idx[1]] in ('|', 'J', 'L'):
-            borders.append(get_longest_sequence(new_idx, 1, offset[0]))
+            borders.append(get_borders(new_idx, 1, offset[0]))
     elif offset[0] == 'right':
         if lines[new_idx[0]][new_idx[1]] in ('_', 'J', '7'):
-            borders.append(get_longest_sequence(new_idx, 1, offset[0]))
+            borders.append(get_borders(new_idx, 1, offset[0]))
 
 polygon = Polygon(borders[0])
 
