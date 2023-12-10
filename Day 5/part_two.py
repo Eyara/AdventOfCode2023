@@ -68,7 +68,7 @@ short_seed_range = []
 for subrange in seeds_range:
     for i in range(0, len(seeds), 2):
         short_seed_range.append(
-            np.array([[x, x + 1] for x in extremum_points if seeds[i] < x < seeds[i] + seeds[i + 1]]).flatten()
+            np.array([[x + 1, x + 2, x + 3] for x in extremum_points if seeds[i] < x < seeds[i] + seeds[i + 1]]).flatten()
         )
 
 for subrange in short_seed_range:
